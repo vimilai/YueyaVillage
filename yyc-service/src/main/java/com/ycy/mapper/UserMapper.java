@@ -19,6 +19,12 @@ import com.ycy.domain.User;
 public interface UserMapper {
 	 	@Select("SELECT * FROM T_USER WHERE PHONE = #{phone}")
 	    User findUserByPhone(@Param("phone") String phone);
+	 	
+	 	@Select("SELECT * FROM T_USER WHERE openid = #{openid}")
+	    User findUserByOpenId(@Param("openid") String openid);
+	 	
+	 	@Select("SELECT * FROM T_USER WHERE user_id = #{userid}")
+	    User findUserByUserId(@Param("userid") Long userid);
 
 	    @Insert("INSERT INTO T_USER(NAME, PASSWORD, PHONE) VALUES(#{name}, #{password}, #{phone})")
 	    int insert(@Param("name") String name, @Param("password") String password, @Param("phone") String phone);
@@ -30,12 +36,12 @@ public interface UserMapper {
 	    @Insert("INSERT INTO T_USER(NAME, PASSWORD, PHONE,OPENID) VALUES(#{name}, #{password}, #{phone},#{openid})")
 	    int insertByUser(User user);
 
-	    @Update("UPDATE T_USER SET NAME = #{name}, PASSWORD = #{password} WHERE PHONE = #{phone}")
+	    @Update("UPDATE T_USER SET NAME = #{name}, PASSWORD = #{password},phone=#{phone},openid=#{openid},plat_id=#{plat_id} WHERE user_id = #{user_id}")
 	    void update(User user);
 
 	    @Delete("DELETE FROM T_USER WHERE ID = #{id}")
 	    void delete(Integer id);
-
+	    
 	    @Results({
 	            @Result(property = "name", column = "NAME"),
 	            @Result(property = "password", column = "PASSWORD"),

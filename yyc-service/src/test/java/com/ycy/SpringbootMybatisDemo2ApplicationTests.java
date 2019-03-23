@@ -65,7 +65,6 @@ public class SpringbootMybatisDemo2ApplicationTests {
 
 		Assert.assertEquals("12312312", u.getPassword());
 
-		userMapper.delete(u.getId());
 
 		u = userMapper.findUserByPhone("18600000000");
 

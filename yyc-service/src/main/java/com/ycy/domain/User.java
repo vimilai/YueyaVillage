@@ -1,16 +1,24 @@
 package com.ycy.domain;
 
 public class User {
-	  	private Integer id;
+	  	private Long user_id;
 	    private String name;
 	    private String password;
 	    private String phone;
 	    private String openid;
-		public Integer getId() {
-			return id;
+	    private Long plat_id;
+	    
+		public Long getPlat_id() {
+			return plat_id;
 		}
-		public void setId(Integer id) {
-			this.id = id;
+		public void setPlat_id(Long plat_id) {
+			this.plat_id = plat_id;
+		}
+		public Long getUser_id() {
+			return user_id;
+		}
+		public void setUser_id(Long user_id) {
+			this.user_id = user_id;
 		}
 		public String getName() {
 			return name;

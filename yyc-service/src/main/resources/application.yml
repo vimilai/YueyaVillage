@@ -2,7 +2,7 @@ spring:
   application:
     name: yyc_service
   datasource:
-     url: jdbc:mysql://127.0.0.1:3306/test
+     url: jdbc:mysql://127.0.0.1:3306/ycy
      username: root
      password: 123456
      driver-class-name: com.mysql.jdbc.Driver
