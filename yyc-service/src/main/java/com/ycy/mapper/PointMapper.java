@@ -17,7 +17,7 @@ public interface PointMapper {
 	    @Update("UPDATE T_point SET point=#{point}  WHERE point_id = #{point_id}")
 	    void updatePlatPerson(Point point);  
 	    
-	    @Insert("INSERT INTO T_point(user_id, palt_id, point) VALUES(#{user_id}, #{palt_id}, #{point})")
+	    @Insert("INSERT INTO T_point(user_id, plat_id, point) VALUES(#{user_id}, #{plat_id}, #{point})")
 	    int insertPoint(Point point);   
 	    
 }
