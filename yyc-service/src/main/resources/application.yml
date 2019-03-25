@@ -6,7 +6,15 @@ spring:
      username: root
      password: 123456
      driver-class-name: com.mysql.jdbc.Driver
+  #max file and request size 
+  http:
+      multipart:
+          max-file-size: 10MB
+          max-request-size: 11MB
 server:
   port: 1001
-
+uploadfile:
+    rootPath: 'D:'
+    sonPath: /ycy/img/
+ 
 
