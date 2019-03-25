@@ -20,6 +20,8 @@ public class StarServiceImpl {
 	MomentMapper momentMapper;
 	@Autowired
 	UserStarMapper userStarMapper;
+	Object addObejct=new Object();
+	Object cancelObejct=new Object();
 	
 	@Transactional
 	public String addStar(Long userid, Long moment_id) {
@@ -29,12 +31,25 @@ public class StarServiceImpl {
 		star.setUser_id(userid);
 		int insert = userStarMapper.insert(star);
 		//2.该小黄包添加收藏人数
-		synchronized (StarServiceImpl.class) {
+		synchronized (addObejct) {
 			Moment moment = momentMapper.findByMomentId(moment_id);
 			moment.setStar_number(moment.getStar_number()+1);
 			momentMapper.updateMomentStarNumber(moment);
 		}
 		return "收藏成功！";
+	}
+	@Transactional
+	public String cancelStar(Long userid, Long moment_id) {
+		int delete = userStarMapper.delete(moment_id,userid);
+		if(delete==1){
+			synchronized (cancelObejct) {
+				Moment moment = momentMapper.findByMomentId(moment_id);
+				moment.setStar_number(moment.getStar_number()-1);
+				momentMapper.updateMomentStarNumber(moment);
+			}
+		}
+		
+		return "取消收藏成功！";
 	}
 	
 	

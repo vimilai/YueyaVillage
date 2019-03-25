@@ -155,6 +155,23 @@ public class MomentController {
 		}
 	}
 	
+	/**
+	 * 用户取消收藏
+	 * @param userid
+	 * @return
+	 */
+	@RequestMapping(value="/cancelStar",method={RequestMethod.GET})
+	@ApiOperation(value = "用户取消收藏", response = Moment.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "返回成功或者失败") })
+	public ResultMessage cancelStar(Long userid,Long moment_id) {
+		try {
+			
+			String addStar = starService.cancelStar(userid,moment_id);
+			return ResultMessage.createSuccessMessage(addStar, null);
+		} catch (Exception e) {
+			 return ResultMessage.createErrorsMessage(null, e.toString());
+		}
+	}
 	
 	
 }

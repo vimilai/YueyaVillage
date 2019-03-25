@@ -15,12 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ycy.domain.User;
 import com.ycy.mapper.UserMapper;
+import com.ycy.service.StarServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringbootMybatisDemo2ApplicationTests {
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	StarServiceImpl  starService;
 
 	@Test
 	@Transactional
@@ -37,11 +41,8 @@ public class SpringbootMybatisDemo2ApplicationTests {
 	@Test
 	@Transactional
 	public void test2(){
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("name","王五");
-		map.put("password","23423");
-		map.put("phone", "13400000000");
-		userMapper.insertByMap(map);
+		starService.addStar(1L, 1L);
+		starService.cancelStar(1L, 1L);
 
 
 	}
