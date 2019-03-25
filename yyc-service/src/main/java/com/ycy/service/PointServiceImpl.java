@@ -1,5 +1,10 @@
 package com.ycy.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +50,25 @@ public class PointServiceImpl {
 			platMapper.updatePlatPerson(plat);
 			
 			return result;
+		}
+
+		public Integer getRankSelf(Long userid) {
+			Integer rank = pointMapper.findByUSerSortRank(userid);
+			return rank;
+		}
+		
+		public List<Map<String,Object>> getRankTop10() {
+			int size=10;
+			List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
+			List<Point> rank = pointMapper.getRankTop10(size);
+			for (Point point : rank) {
+				Map<String,Object> map=new HashMap<String,Object>();
+				map.put("point", point);
+				User user = userMapper.findUserByUserId(point.getUser_id());
+				map.put("user", user);
+				list.add(map);
+			}
+			return list;
 		}
 		
 }

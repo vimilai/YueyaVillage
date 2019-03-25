@@ -1,5 +1,11 @@
 package com.ycy.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +23,7 @@ import com.ycy.util.ResultMessage;
 
 
 @RestController
+@Api(value = "/", description = "用户服务")
 public class UserController {
 		
 	@Autowired
@@ -32,7 +39,9 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="/adduser",method={RequestMethod.POST})
-    public ResultMessage add(@RequestBody User user) {
+	@ApiOperation(value = "用户注册", response = User.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "返回用户信息") })
+    public ResultMessage add(@RequestBody  @ApiParam(value = "user 对象 openid 一定要传", required = true) User user) {
 		try {
 			int insertByUser = userMapper.insertByUser(user);
 			User user2 = userMapper.findUserByOpenId(user.getOpenid());
@@ -51,6 +60,8 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="/selectPlat",method={RequestMethod.GET})
+	@ApiOperation(value = "用户选择平台", response = String.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "返回成功或者失败") })
 	public ResultMessage selectPlat(Long userid,Long platid) {
 		try {
 			String result = userService.selectPlat(userid, platid);

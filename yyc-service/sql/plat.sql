@@ -1,7 +1,7 @@
 CREATE TABLE `t_plat` (
   `plat_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `plat_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '平台名字',
-  `plat_person` bigint(40) DEFAULT '0' COMMENT '平台使用人数',
-  `plat_point` bigint(40) DEFAULT '0' COMMENT '使用积分',
+  `plat_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '骞冲彴鍚嶅瓧',
+  `plat_person` bigint(40) DEFAULT '0' COMMENT '浣跨敤浜烘暟',
+  `plat_point` bigint(40) DEFAULT '0' COMMENT '使骞冲彴绉垎',
   PRIMARY KEY (`plat_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

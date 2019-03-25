@@ -5,11 +5,7 @@ public class Point {
 		private Long	user_id;
 		private Long	plat_id;
 		private Long	point;
-		
-		
-		
-		
-		
+		public Point(){}
 		public Point(Long user_id, Long plat_id, Long point) {
 			this.user_id = user_id;
 			this.plat_id = plat_id;

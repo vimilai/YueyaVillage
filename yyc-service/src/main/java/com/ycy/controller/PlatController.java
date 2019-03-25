@@ -1,5 +1,10 @@
 package com.ycy.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,7 @@ import com.ycy.util.ResultMessage;
 
 
 @RestController
+@Api(value = "/", description = "平台服务")
 public class PlatController {
 		
 	@Autowired
@@ -26,6 +32,8 @@ public class PlatController {
 	
 	
 	@RequestMapping(value="/getPlatAll",method={RequestMethod.GET})
+	@ApiOperation(value = "获取所有平台信息", response =  Plat.class)
+	@ApiResponses({ @ApiResponse(code = 200, message = "返回自己的排名 包含用户以及积分信息") })
     public ResultMessage home() {
 		try {
 				List<Plat> findAll = platMapper.findAll();
