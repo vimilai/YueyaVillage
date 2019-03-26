@@ -3,6 +3,8 @@ package com.ycy.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -27,6 +29,7 @@ import com.ycy.mapper.UserMapper;
 import com.ycy.mapper.UserStarMapper;
 import com.ycy.service.StarServiceImpl;
 import com.ycy.service.UserServiceImpl;
+import com.ycy.util.CookieUtils;
 import com.ycy.util.ResultMessage;
 
 
@@ -111,9 +114,13 @@ public class MomentController {
 	@RequestMapping(value="/showMomentSelf",method={RequestMethod.GET})
 	@ApiOperation(value = " 我的发布", response = Moment.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "返回成功或者失败") })
-	public ResultMessage showMomentSelf(Long userid) {
+	public ResultMessage showMomentSelf(HttpServletRequest request) {
 		try {
-			List<Moment> list2 = momentMapper.findByUserId(userid);
+			String userid=CookieUtils.getUserIdcookie(request);
+			if(userid==null){
+				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
+			}
+			List<Moment> list2 = momentMapper.findByUserId(Long.valueOf(userid));
 			return ResultMessage.createSuccessMessage(list2, null);
 		} catch (Exception e) {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
@@ -145,10 +152,13 @@ public class MomentController {
 	@RequestMapping(value="/addStar",method={RequestMethod.GET})
 	@ApiOperation(value = "用户点击收藏", response = Moment.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "返回成功或者失败") })
-	public ResultMessage addStar(Long userid,Long moment_id) {
+	public ResultMessage addStar(Long moment_id,HttpServletRequest request) {
 		try {
-			
-			String addStar = starService.addStar(userid,moment_id);
+				String userid=CookieUtils.getUserIdcookie(request);
+				if(userid==null){
+					return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
+				}
+			String addStar = starService.addStar(Long.valueOf(userid),moment_id);
 			return ResultMessage.createSuccessMessage(addStar, null);
 		} catch (Exception e) {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
@@ -163,10 +173,13 @@ public class MomentController {
 	@RequestMapping(value="/cancelStar",method={RequestMethod.GET})
 	@ApiOperation(value = "用户取消收藏", response = Moment.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "返回成功或者失败") })
-	public ResultMessage cancelStar(Long userid,Long moment_id) {
+	public ResultMessage cancelStar(Long moment_id,HttpServletRequest request) {
 		try {
-			
-			String addStar = starService.cancelStar(userid,moment_id);
+			String userid=CookieUtils.getUserIdcookie(request);
+			if(userid==null){
+				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
+			}
+			String addStar = starService.cancelStar(Long.valueOf(userid),moment_id);
 			return ResultMessage.createSuccessMessage(addStar, null);
 		} catch (Exception e) {
 			 return ResultMessage.createErrorsMessage(null, e.toString());

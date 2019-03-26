@@ -33,7 +33,7 @@ public interface UserMapper {
 	            "#{name, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{phone, jdbcType=VARCHAR})")
 	    int insertByMap(Map<String, Object> map);
 
-	    @Insert("INSERT INTO T_USER(NAME, PASSWORD, PHONE,OPENID) VALUES(#{name}, #{password}, #{phone},#{openid})")
+	    @Insert("INSERT INTO T_USER(NAME,OPENID,picurl) VALUES(#{name},#{openid},#{picurl})")
 	    int insertByUser(User user);
 
 	    @Update("UPDATE T_USER SET NAME = #{name}, PASSWORD = #{password},phone=#{phone},openid=#{openid},plat_id=#{plat_id} WHERE user_id = #{user_id}")

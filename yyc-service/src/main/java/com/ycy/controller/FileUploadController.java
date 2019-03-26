@@ -1,31 +1,27 @@
 package com.ycy.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletInputStream;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.ycy.domain.Moment;
-import com.ycy.domain.Plat;
 import com.ycy.service.UploadFileServiceImpl;
 import com.ycy.util.ResultMessage;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 @RestController
 @Api(value = "/", description = "图片上传服务")
@@ -54,6 +50,17 @@ public class FileUploadController {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
 		}
     }
+    @RequestMapping(value="/upload1",method=RequestMethod.POST)
+	public void  upload1(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		ServletInputStream inputStream = request.getInputStream();
+		ServletOutputStream outputStream = response.getOutputStream();
+		System.out.println(inputStream);
+		while(inputStream.read()!=-1){
+			outputStream.print(inputStream.read());
+		}
+		
+	}
+    
     /**
      * 多文件上传 主要是使用了MultipartHttpServletRequest和MultipartFile
      *

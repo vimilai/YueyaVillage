@@ -7,7 +7,14 @@ public class User {
 	    private String phone;
 	    private String openid;
 	    private Long plat_id;
+	    private String picurl;
 	    
+		public String getPicurl() {
+			return picurl;
+		}
+		public void setPicurl(String picurl) {
+			this.picurl = picurl;
+		}
 		public Long getPlat_id() {
 			return plat_id;
 		}

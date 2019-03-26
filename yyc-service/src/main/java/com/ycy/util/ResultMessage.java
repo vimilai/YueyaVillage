@@ -1,20 +1,22 @@
 package com.ycy.util;
 
 public class ResultMessage {
-		public final static String SUCCESS="success";
-		public final static String FAIL="fail";
+		public final static Integer SUCCESS=1000;//返回成功
+		public final static Integer FAIL=1001;//返回错误
+		public final static Integer PARAMMISS=1002;//参数缺失
+		public final static Integer NODATA=1003;//没有数据
+		public static final Integer PARAMERROR = 1004;//参数错误
 	
-		private  String reslut;
+		private  Integer resultCode;
 		private  Object  content; 
 		private  String  error;
 		
 		
-		
-		public String getReslut() {
-			return reslut;
+		public Integer getResultCode() {
+			return resultCode;
 		}
-		public void setReslut(String reslut) {
-			this.reslut = reslut;
+		public void setResultCode(Integer resultCode) {
+			this.resultCode = resultCode;
 		}
 		public Object getContent() {
 			return content;
@@ -29,14 +31,14 @@ public class ResultMessage {
 		public void setError(String error) {
 			this.error = error;
 		}
-		public ResultMessage(String reslut, String error) {
+		public ResultMessage(Integer reslut, String error) {
 			super();
-			this.reslut = reslut;
+			this.resultCode = reslut;
 			this.error = error;
 		}
-		public ResultMessage(String reslut, Object content, String error) {
+		public ResultMessage(Integer reslut, Object content, String error) {
 			super();
-			this.reslut = reslut;
+			this.resultCode = reslut;
 			this.content = content;
 			this.error = error;
 		}

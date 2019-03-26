@@ -8,12 +8,15 @@ import io.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ycy.service.PointServiceImpl;
+import com.ycy.util.CookieUtils;
 import com.ycy.util.ResultMessage;
 
 
@@ -30,9 +33,13 @@ public class PointController {
 	@RequestMapping(value="/addpoint",method={RequestMethod.GET})
 	@ApiOperation(value = "用户上传积分", response = String.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "返回成功或者失败") })
-    public ResultMessage home(String userId,String point) {
+    public ResultMessage home(HttpServletRequest request,String point) {
 		try {
-				String string = pointService.addPoint(Long.valueOf(userId),Long.valueOf( point));
+			String userid=CookieUtils.getUserIdcookie(request);
+			if(userid==null){
+				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
+			}
+				String string = pointService.addPoint(Long.valueOf(userid),Long.valueOf( point));
 				return ResultMessage.createSuccessMessage(string, null);
 		} catch (Exception e) {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
@@ -46,9 +53,13 @@ public class PointController {
 	@RequestMapping(value="/getRankSelf",method={RequestMethod.GET})
 	@ApiOperation(value = "用户查看自己当前排名", response = String.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "返回自己的排名") })
-    public ResultMessage getRankSelf(String userId) {
+    public ResultMessage getRankSelf(HttpServletRequest request) {
 		try {
-				Long valueOf = Long.valueOf(userId);
+			String userid=CookieUtils.getUserIdcookie(request);
+			if(userid==null){
+				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
+			}
+				Long valueOf = Long.valueOf(userid);
 				Integer string = pointService.getRankSelf(valueOf);
 				return ResultMessage.createSuccessMessage(string, null);
 		} catch (Exception e) {

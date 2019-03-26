@@ -12,7 +12,7 @@ spring:
           max-file-size: 10MB
           max-request-size: 11MB
 server:
-  port: 1001
+  port: 8086
 uploadfile:
     rootPath: 'D:'
     sonPath: /ycy/img/
