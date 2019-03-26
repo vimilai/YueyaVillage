@@ -39,8 +39,7 @@ public class PointController {
 			if(userid==null){
 				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
 			}
-				String string = pointService.addPoint(Long.valueOf(userid),Long.valueOf( point));
-				return ResultMessage.createSuccessMessage(string, null);
+				return pointService.addPoint(Long.valueOf(userid),Long.valueOf( point));
 		} catch (Exception e) {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
 		}
