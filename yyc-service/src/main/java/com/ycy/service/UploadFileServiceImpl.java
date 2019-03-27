@@ -14,6 +14,9 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
+
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
  
 @Service
 public class UploadFileServiceImpl {
@@ -32,22 +35,31 @@ public class UploadFileServiceImpl {
  
   /*  @Autowired
     private UplocalFileEntityMapper uplocalFileEntityMapper;*/
-    public String getUploadFilePath(InputStream inputStream) {
-        //返回上传的文件是否为空，即没有选择任何文件，或者所选文件没有内容。
-    	try {
-			if(inputStream.read()==-1){
-				throw new NullPointerException("文件为空");
-			}
+    public String getUploadFilePath(HttpServletRequest request) {
+    	ServletInputStream inputStream=null;
+		try {
+			inputStream = request.getInputStream();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+        //返回上传的文件是否为空，即没有选择任何文件，或者所选文件没有内容。
+			if(request.getContentLength()==-1){
+				throw new NullPointerException("文件为空");
+			}
         //防止上传空文件导致奔溃
     	
 		 // 设置文件上传后的路径
        String filePath = ROOT_PATH + SON_PATH;
        // 获取文件名后缀名
+       String contentType = request.getContentType();
+      
        String suffix =".png";
+       if(contentType.equals("image/png")) {
+    	   suffix =".png";
+       }else if(contentType.equals("image/jpeg")) {
+    	   suffix =".jpeg";
+       }
        String prefix = suffix.substring(suffix.lastIndexOf(".")+1);
        //为防止文件重名被覆盖，文件名取名为：当前日期 + 1-1000内随机数
        Random random = new Random();

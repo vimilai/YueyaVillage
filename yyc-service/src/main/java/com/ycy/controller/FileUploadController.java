@@ -51,14 +51,12 @@ public class FileUploadController {
 		}
     }
     @RequestMapping(value="/uploadByBinary",method=RequestMethod.POST)
-    @ApiOperation(value = "二进制上传，暂时只支持png上传")
+    @ApiOperation(value = "二进制上传，暂时只支持png和jpg上传")
     @ApiResponses({ @ApiResponse(code = 200, message = "返回图片url") })
 	public ResultMessage  upload1(HttpServletRequest request,HttpServletResponse response) {
-		ServletInputStream inputStream = null;
 		try {
-			inputStream = request.getInputStream();
 			
-			String filePath = uploadFileService.getUploadFilePath(inputStream);
+			String filePath = uploadFileService.getUploadFilePath(request);
 			return ResultMessage.createSuccessMessage(filePath, null);
 		} 
 		catch (Exception e) {
