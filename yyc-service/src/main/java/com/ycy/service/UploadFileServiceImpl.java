@@ -47,7 +47,7 @@ public class UploadFileServiceImpl {
 		 // 设置文件上传后的路径
        String filePath = ROOT_PATH + SON_PATH;
        // 获取文件名后缀名
-       String suffix =".jpg";
+       String suffix =".png";
        String prefix = suffix.substring(suffix.lastIndexOf(".")+1);
        //为防止文件重名被覆盖，文件名取名为：当前日期 + 1-1000内随机数
        Random random = new Random();
