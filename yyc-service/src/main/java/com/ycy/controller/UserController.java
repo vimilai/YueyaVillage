@@ -58,13 +58,27 @@ public class UserController {
 			if(user.getPicurl()==null){
 				return new ResultMessage(ResultMessage.PARAMMISS, "没有用户头像", null);
 			}
-			int insertByUser = userMapper.insertByUser(user);
+			
 			User user2 = userMapper.findUserByOpenId(user.getOpenid());
-			Cookie cookie = new Cookie("userid", user2.getUser_id()+"");
-			response.addCookie(cookie);
-			if(insertByUser==1) {
-				return ResultMessage.createSuccessMessage("用户添加成功", null);
+			if(user2==null) {
+				int insertByUser = userMapper.insertByUser(user);
+				user2 = userMapper.findUserByOpenId(user.getOpenid());
+				 if(insertByUser==1) {
+					 	Cookie cookie = new Cookie("userid", user2.getUser_id()+"");
+						response.addCookie(cookie);
+						return ResultMessage.createSuccessMessage("用户添加成功", null);
+				}
+			}else {
+				user2.setName(user.getName());
+				user2.setPicurl(user.getPicurl());
+				userMapper.update(user2);
+				Cookie cookie = new Cookie("userid", user2.getUser_id()+"");
+				response.addCookie(cookie);
+				return ResultMessage.createSuccessMessage("用户修改信息成功", null);
 			}
+			
+			
+			
 		} catch (Exception e) {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
 		}

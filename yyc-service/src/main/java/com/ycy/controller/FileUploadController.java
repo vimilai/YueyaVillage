@@ -50,13 +50,19 @@ public class FileUploadController {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
 		}
     }
-    @RequestMapping(value="/upload1",method=RequestMethod.POST)
-	public void  upload1(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		ServletInputStream inputStream = request.getInputStream();
-		ServletOutputStream outputStream = response.getOutputStream();
-		System.out.println(inputStream);
-		while(inputStream.read()!=-1){
-			outputStream.print(inputStream.read());
+    @RequestMapping(value="/uploadByBinary",method=RequestMethod.POST)
+    @ApiOperation(value = "二进制上传，暂时只支持jpg")
+    @ApiResponses({ @ApiResponse(code = 200, message = "返回图片url") })
+	public ResultMessage  upload1(HttpServletRequest request,HttpServletResponse response) {
+		ServletInputStream inputStream = null;
+		try {
+			inputStream = request.getInputStream();
+			
+			String filePath = uploadFileService.getUploadFilePath(inputStream);
+			return ResultMessage.createSuccessMessage(filePath, null);
+		} 
+		catch (Exception e) {
+			 return ResultMessage.createErrorsMessage(null, e.getMessage());
 		}
 		
 	}
@@ -67,8 +73,8 @@ public class FileUploadController {
      * @param request
      * @return
      * 
-     * @author 单红宇(CSDN CATOOP)
-     * @create 2017年3月11日
+     * @author 
+     * @create 
      */
     @RequestMapping(value = "/upload/batch", method = RequestMethod.POST)
     @ApiOperation(value = "多文件上传暂时不可用")
