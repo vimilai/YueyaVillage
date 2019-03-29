@@ -36,13 +36,16 @@ public class WishController {
 	@RequestMapping(value="/addwish",method={RequestMethod.GET})
 	@ApiOperation(value = "许愿池发布", response = ResultMessage.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "返回成功或者失败") })
-    public ResultMessage home(HttpServletRequest request,Wish wish) {
+    public ResultMessage home(HttpServletRequest request,String  content) {
 		try {
 			String userid=CookieUtils.getUserIdcookie(request);
 			if(userid==null){
 				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
 			}
+			Wish wish=new Wish();
 			wish.setCreate_date(new Date());
+			wish.setUser_id(Long.valueOf(userid));
+			wish.setContent(content);
 			wishMapper.insertWish(wish);
 			return ResultMessage.createErrorsMessage("发布成功", null);
 		} catch (Exception e) {
