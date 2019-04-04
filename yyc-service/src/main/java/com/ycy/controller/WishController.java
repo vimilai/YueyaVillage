@@ -47,7 +47,7 @@ public class WishController {
 			wish.setUser_id(Long.valueOf(userid));
 			wish.setContent(content);
 			wishMapper.insertWish(wish);
-			return ResultMessage.createErrorsMessage("发布成功", null);
+			return ResultMessage.createSuccessMessage("发布成功", null);
 		} catch (Exception e) {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
 		}
@@ -67,6 +67,7 @@ public class WishController {
 				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
 			}
 			Wish findWishNoLook = wishMapper.findWishNoLook();
+			findWishNoLook.setLook_flag("Y");
 			wishMapper.updateLookFlag(findWishNoLook);
 			return ResultMessage.createSuccessMessage(findWishNoLook, null);
 		} catch (Exception e) {

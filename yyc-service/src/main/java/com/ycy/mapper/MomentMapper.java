@@ -22,7 +22,7 @@ public interface MomentMapper {
 		@Update("UPDATE t_moment SET star_number=#{star_number}  WHERE moment_id = #{moment_id}")
 		void updateMomentStarNumber(Moment Moment);  
 		
-		@Insert("INSERT INTO t_moment(user_id, content, imgurl) VALUES(#{user_id}, #{content}, #{imgurl})")
+		@Insert("INSERT INTO t_moment(user_id, content, imgurl,create_date) VALUES(#{user_id}, #{content}, #{imgurl},CURDATE())")
 		int insertMoment(Moment moment );
 		/**
 		 * 根据momentids 查找对应的说说

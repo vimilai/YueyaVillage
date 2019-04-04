@@ -1,6 +1,8 @@
 package com.ycy.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,8 +55,13 @@ public class MomentController {
 	@RequestMapping(value="/addMoment",method={RequestMethod.POST})
 	@ApiOperation(value = "发布小黄包", response = Moment.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "返回发布结果信息") })
-    public ResultMessage addMoment(@RequestBody  @ApiParam(value = "先上传调用获取图片的url服务", required = true) Moment moment) {
+    public ResultMessage addMoment(@RequestBody  @ApiParam(value = "先上传调用获取图片的url服务；图片之间以封号分隔", required = true) Moment moment,HttpServletRequest request) {
 		try {
+			String userid=CookieUtils.getUserIdcookie(request);
+			if(userid==null){
+				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
+			}
+			moment.setUser_id(Long.valueOf(userid));
 			int insertByUser = momentMapper.insertMoment(moment);
 			if(insertByUser==1) {
 				return ResultMessage.createSuccessMessage("发布成功！", null);
@@ -73,10 +80,23 @@ public class MomentController {
 	@RequestMapping(value="/showMomentNews",method={RequestMethod.GET})
 	@ApiOperation(value = "用户展示最新发布", response = Moment.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "返回成功或者失败") })
-	public ResultMessage showMomentNews() {
+	public ResultMessage showMomentNews(HttpServletRequest request) {
 		try {
+			String userid=CookieUtils.getUserIdcookie(request);
+			if(userid==null){
+				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
+			}
 			int size=10;
 			List<Moment> findMomentByMomentIdDesc = momentMapper.findMomentByMomentIdDesc(size);
+			List<UserStar> list = userStarMapper.findByUserId(Long.valueOf(userid));
+			HashSet<Long> set=new HashSet<Long>();
+			for (UserStar userStar : list) {
+				set.add(userStar.getMoment_id());
+			}
+			for (Moment moment : findMomentByMomentIdDesc) {
+				if(set.contains(moment.getMoment_id())) moment.setIsStarBySelf(true);
+			}
+			
 			return ResultMessage.createSuccessMessage(findMomentByMomentIdDesc, null);
 		} catch (Exception e) {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
@@ -91,14 +111,23 @@ public class MomentController {
 	@RequestMapping(value="/showMomentStar",method={RequestMethod.GET})
 	@ApiOperation(value = " 我的收藏", response = Moment.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "返回成功或者失败") })
-	public ResultMessage showMomentStar(Long userid) {
+	public ResultMessage showMomentStar(HttpServletRequest request) {
+		
 		try {
+			String userid=CookieUtils.getUserIdcookie(request);
+			if(userid==null){
+				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
+			}
 			List<Long> momentids=new ArrayList<Long>();
-			List<UserStar> list = userStarMapper.findByUserId(userid);
+			List<UserStar> list = userStarMapper.findByUserId(Long.valueOf(userid));
+			if(list.size()==0)  return ResultMessage.createSuccessMessage(null, null);
 			for (UserStar userStar : list) {
 				momentids.add(userStar.getMoment_id());
 			}
 			List<Moment> list2 = momentMapper.findMomentByMomentIds(momentids);
+			for (Moment moment : list2) {
+				 moment.setIsStarBySelf(true);
+			}
 			return ResultMessage.createSuccessMessage(list2, null);
 		} catch (Exception e) {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
@@ -135,9 +164,21 @@ public class MomentController {
 	@RequestMapping(value="/showMomentStarTop10",method={RequestMethod.GET})
 	@ApiOperation(value = " 收藏榜单top10", response = Moment.class)
 	@ApiResponses({ @ApiResponse(code = 200, message = "返回成功或者失败") })
-	public ResultMessage showMomentStarTop10() {
+	public ResultMessage showMomentStarTop10(HttpServletRequest request) {
 		try {
+			String userid=CookieUtils.getUserIdcookie(request);
+			if(userid==null){
+				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
+			}
 			List<Moment> list2 = momentMapper.findMomentByStarNumberDesc(10);
+			List<UserStar> list = userStarMapper.findByUserId(Long.valueOf(userid));
+			HashSet<Long> set=new HashSet<Long>();
+			for (UserStar userStar : list) {
+				set.add(userStar.getMoment_id());
+			}
+			for (Moment moment : list2) {
+				if(set.contains(moment.getMoment_id())) moment.setIsStarBySelf(true);
+			}
 			return ResultMessage.createSuccessMessage(list2, null);
 		} catch (Exception e) {
 			 return ResultMessage.createErrorsMessage(null, e.toString());
