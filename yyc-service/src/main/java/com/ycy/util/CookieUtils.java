@@ -7,11 +7,16 @@ public class CookieUtils {
 		
 	
 	public static String getUserIdcookie(HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
-		for (Cookie cookie : cookies) {
-			if("userid".equals(cookie.getName())){
-				return cookie.getValue();
+		try {
+			Cookie[] cookies = request.getCookies();
+			for (Cookie cookie : cookies) {
+				if("userid".equals(cookie.getName())){
+					return cookie.getValue();
+				}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return null;
 	}

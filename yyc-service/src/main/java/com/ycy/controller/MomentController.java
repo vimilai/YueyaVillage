@@ -1,6 +1,7 @@
 package com.ycy.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -62,6 +63,7 @@ public class MomentController {
 				return new ResultMessage(ResultMessage.PARAMMISS, "没有userid", null);
 			}
 			moment.setUser_id(Long.valueOf(userid));
+			moment.setCreate_date(new Date());
 			int insertByUser = momentMapper.insertMoment(moment);
 			if(insertByUser==1) {
 				return ResultMessage.createSuccessMessage("发布成功！", null);

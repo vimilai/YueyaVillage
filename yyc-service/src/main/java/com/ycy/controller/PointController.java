@@ -21,7 +21,8 @@ import com.ycy.util.ResultMessage;
 
 
 @RestController
-@Api(value = "/", description = "积分服务")
+@Api(value = "/point", description = "积分服务")
+@RequestMapping(value="/point")
 public class PointController {
 		
 	@Autowired
