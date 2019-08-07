@@ -5,9 +5,9 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-  	<!--< module>yyc_comm</module>
+  	<module>yyc_comm</module>
   	<module>eureka-server</module>
-  	<module>yyc_client</module> -->
+  	<module>yyc_client</module>
   	<module>yyc-service</module>
   </modules>
   

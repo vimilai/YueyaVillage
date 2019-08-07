@@ -1,6 +1,6 @@
 spring:
   application:
-    name: yyc_service
+    name: yyc-service
   datasource:
      url: jdbc:mysql://127.0.0.1:3306/ycy?characterEncoding=utf8
      username: root
@@ -30,6 +30,11 @@ server:
 uploadfile:
     rootPath: 'D:'
     sonPath: /ycy/img/
+eureka:
+  client:
+   serviceUrl:
+      #defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+       defaultZone: http://localhost:8761/eureka/
     
  
 

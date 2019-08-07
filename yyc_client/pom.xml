@@ -12,8 +12,12 @@
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-starter-eureka</artifactId>
 	</dependency>
-	</dependencies>
 	
+	<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+     </dependency>
+	</dependencies>
 	<!-- spring boot 打jar包，正常运行需要该配置。否则可能提示jar中没有主清单属性，等错误信息 -->
 	<build>
 		<plugins>
