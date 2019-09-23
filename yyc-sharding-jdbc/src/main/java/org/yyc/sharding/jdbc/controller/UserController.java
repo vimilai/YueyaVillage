@@ -1,11 +1,15 @@
 package org.yyc.sharding.jdbc.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.yyc.sharding.jdbc.entity.TUser;
 import org.yyc.sharding.jdbc.entity.User;
+import org.yyc.sharding.jdbc.service.TUserService;
 import org.yyc.sharding.jdbc.service.UserService;
 
 /**
@@ -19,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private TUserService tUserService;
+    
 
     //测试
     @RequestMapping(value="update1")
@@ -37,6 +44,12 @@ public class UserController {
         user2.setPassWord(passWord);
         user2.setUserName(userName);
         userService.insert(user2);
+      
         return "success";
     }
+    @RequestMapping(value="select")
+    public List<User> slect(){
+    	return userService.selectList();
+    }
+    
 }

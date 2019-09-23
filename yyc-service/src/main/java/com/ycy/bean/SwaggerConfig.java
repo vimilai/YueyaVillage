@@ -4,7 +4,6 @@ import static com.google.common.base.Predicates.or;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 
-import org.springframework.boot.autoconfigure.web.BasicErrorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +28,7 @@ public class SwaggerConfig {
         Predicate<RequestHandler> predicate = new Predicate<RequestHandler>() {
             public boolean apply(RequestHandler input) {
                 Class<?> declaringClass = input.declaringClass();
-                if (declaringClass == BasicErrorController.class)// 排除
+                if (declaringClass == org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.class)// 排除
                     return false;
                 if(declaringClass.isAnnotationPresent(RestController.class)) // 被注解的类
                     return true;

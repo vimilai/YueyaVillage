@@ -8,15 +8,23 @@
   <artifactId>yyc_client</artifactId>
   
   	<dependencies>
-  	<dependency>
+   <!-- <dependency>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-starter-eureka</artifactId>
-	</dependency>
-	
-	<dependency>
+	</dependency> -->
+	<!--升级spring boot spring cloud 版本  替换 -->
+		<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>	
+<!-- 	<dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
-     </dependency>
+     </dependency> -->
+     	<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
 	</dependencies>
 	<!-- spring boot 打jar包，正常运行需要该配置。否则可能提示jar中没有主清单属性，等错误信息 -->
 	<build>

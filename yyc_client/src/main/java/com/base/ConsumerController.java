@@ -12,7 +12,6 @@ public class ConsumerController {
 	
     @RequestMapping("/getRankTop10")
     public ResultMessage index() {
-    	
         return (ResultMessage) helloRemote.getRankTop10();
     }
 

@@ -38,7 +38,7 @@ import com.dangdang.ddframe.rdb.sharding.api.strategy.table.TableShardingStrateg
  * @Description: 数据源配置和Mybatis配置和分库分表规则
  */
 @Configuration
-@MapperScan(basePackages = "com.example.shardingjdbc.mapper", sqlSessionTemplateRef  = "test1SqlSessionTemplate")
+@MapperScan(basePackages = "org.yyc.sharding.jdbc.mapper", sqlSessionTemplateRef  = "test1SqlSessionTemplate")
 public class DataSourceConfig {
 
     /**
@@ -119,6 +119,7 @@ public class DataSourceConfig {
      * @return
      */
     @Bean
+    @Primary
     public DataSourceTransactionManager transactitonManager(@Qualifier("dataSource") DataSource dataSource){
         return new DataSourceTransactionManager(dataSource);
     }
@@ -128,6 +129,7 @@ public class DataSourceConfig {
     public SqlSessionFactory testSqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
+        
 //        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/*.xml"));
         return bean.getObject();
     }
