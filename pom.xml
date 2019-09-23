@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ycy.yyc</groupId>
@@ -9,7 +10,8 @@
   	<module>eureka-server</module>
   	<module>yyc_client</module>
   	<module>yyc-service</module>
-  	<module>yyc-sharding-jdbc</module>
+	<module>yyc-sharding-jdbc</module>
+    <module>yyc-jta-tx</module>
   </modules>
   
   <properties>
@@ -46,7 +48,7 @@
 
 	</dependencies>
  
-	<!-- 加入该配置后，spring boot类型的子项目，可不用配置org.springframework.boot的<parent>标签 -->
+	<!-- 加入该配置后，spring boot类型的子项目，可不用配置org.springframework.boot�?<parent>标签 -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
